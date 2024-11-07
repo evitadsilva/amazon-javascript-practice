@@ -1,5 +1,20 @@
 const products = [
   {
+    id: "id1",
+    image: "images/products/backpack.jpg",
+    name: "Backpack for school or college",
+    rating: {
+      stars: 5,
+      count: 77
+    },
+    priceCents: 1000,
+    keywords: [
+      "backpack",
+      "school",
+      "college"
+    ]
+  },
+  {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
