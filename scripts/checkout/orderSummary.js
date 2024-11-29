@@ -4,6 +4,7 @@ import { formatCurrency } from "../utils/money.js";
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from "./paymentSummary.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderOrderSummary() {
   let cartSummaryHtml = '';
@@ -137,20 +138,11 @@ export function renderOrderSummary() {
         );
         container.remove();
 
-        updateCartQuantity();
+        renderCheckoutHeader();
+        renderOrderSummary();
         renderPaymentSummary();
       });
     });
-
-    function updateCartQuantity() {
-      const cartQuantity = calculateCartQuantity();
-
-      document.querySelector('.js-return-to-home-link')
-        .innerHTML = `${cartQuantity} items`;
-
-    }
-
-    updateCartQuantity();
 
     document.querySelectorAll('.js-update-link')
       .forEach((link) => {
@@ -197,7 +189,7 @@ export function renderOrderSummary() {
       document.querySelector(`.js-quantity-label-${productId}`)
         .innerHTML = newQuantity;
 
-      updateCartQuantity();
+      renderCheckoutHeader();
       renderPaymentSummary();
     }
     
