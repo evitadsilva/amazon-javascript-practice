@@ -34,7 +34,7 @@ export function addToCart(productId) {
 
   let quantitySelector = document.querySelector(`.js-quantity-selector-${productId}`);
 
-  let quantity = quantitySelector ? Number(quantitySelector.value) : 0;
+  let quantity = quantitySelector ? Number(quantitySelector.value) : 1;
 
   if (matchingItem) {
     matchingItem.quantity += quantity;
