@@ -30,14 +30,16 @@ export function renderOrderSummary() {
 
       <div class="cart-item-details-grid">
         <img class="product-image"
-          src="${matchingProduct.image}"/>
+          src="${matchingProduct.image}">
 
         <div class="cart-item-details">
-          <div class="product-name">
+          <div class="product-name 
+          js-product-name-${matchingProduct.id}">
             ${matchingProduct.name}
           </div>
-          <div class="product-price">
-          ${formatCurrency(matchingProduct.priceCents)}
+          <div class="product-price
+          js-product-price-${matchingProduct.id}">
+            ${matchingProduct.getPrice()}
           </div>
           <div class="product-quantity 
             js-product-quantity-${matchingProduct.id}">
@@ -76,26 +78,27 @@ export function renderOrderSummary() {
   });
 
   function deliveryOptionsHTML(matchingProduct, cartItem) {
-    let html = '';
+    let html = ``;
 
     deliveryOptions.forEach((deliveryOption) => {
       const dateString = calculateDeliveryDate(deliveryOption);
 
       const priceString = deliveryOption.priceCents === 0
         ? 'FREE'
-        : `${formatCurrency(deliveryOption.priceCents)} -`;
+        : `$${formatCurrency(deliveryOption.priceCents)} -`
 
         const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
         
       html +=
       `
-        <div class="delivery-option js-delivery-option"
+        <div class="delivery-option js-delivery-option js-delivery-option-${matchingProduct.id}-${deliveryOption.id}"
         data-product-id = "${matchingProduct.id}"
         data-delivery-option-id = "${deliveryOption.id}">
           <input type="radio"
-          ${isChecked ? 'checked' : ""}
-            class="delivery-option-input"
-            name="delivery-option-${matchingProduct.id}">
+          ${isChecked ? "checked" : ""}
+            class="delivery-option-input
+            js-delivery-option-input-${matchingProduct.id}-${deliveryOption.id}"
+            name="${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               ${dateString}
@@ -105,7 +108,7 @@ export function renderOrderSummary() {
             </div>
           </div>
         </div>
-      `;
+      `
     });
 
     return html;
@@ -115,7 +118,7 @@ export function renderOrderSummary() {
     .innerHTML = cartSummaryHtml;
 
   document.querySelectorAll('.js-delete-link')
-    .forEach((link) => {
+    .forEach((link) =>{
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
@@ -161,7 +164,7 @@ export function renderOrderSummary() {
 
     function handleQuantitySave(productId) {
       const quantityInput = document.querySelector(`.js-quantity-input-${productId}`);
-      const newQuantity = Number(quantityInput.value);
+      const newQuantity = parseInt(quantityInput.value);
     
       if (newQuantity < 0 || newQuantity >= 1000) {
         alert('Quantity must be at least 0 and less than 1000');
@@ -177,6 +180,7 @@ export function renderOrderSummary() {
         .innerHTML = newQuantity;
 
       renderCheckoutHeader();
+      renderOrderSummary();
       renderPaymentSummary();
     }
     

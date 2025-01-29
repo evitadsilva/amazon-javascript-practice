@@ -90,7 +90,7 @@ describe('test suite: renderOrderSummary', () => {
   it('updates the delivery options', () => {
     document.querySelector(`.js-delivery-option-${productId1}-3`).click();
 
-    expect( 
+    expect(
       document.querySelector(`.js-delivery-option-input-${productId1}-3`).checked
     ).toEqual(true);
 
@@ -98,8 +98,18 @@ describe('test suite: renderOrderSummary', () => {
 
     expect(cart[0].productId).toEqual(productId1);
 
-    expect(cart[0].deliveryOptionId).toEqual('3');
+    expect(cart[0].deliveryOptionId).toContain('3');
+
+    expect(
+      document.querySelector('.js-payment-summary-shipping').innerText
+    ).toEqual('$14.98');
+    
+    expect(
+      document.querySelector('.js-payment-summary-total').innerText
+    ).toEqual('$63.50');
     
     });
 
   });
+
+
