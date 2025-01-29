@@ -30,14 +30,14 @@ export function renderOrderSummary() {
 
       <div class="cart-item-details-grid">
         <img class="product-image"
-          src="${matchingProduct.image}">
+          src="${matchingProduct.image}"/>
 
         <div class="cart-item-details">
           <div class="product-name">
             ${matchingProduct.name}
           </div>
           <div class="product-price">
-            ${matchingProduct.getPrice()}
+          ${formatCurrency(matchingProduct.priceCents)}
           </div>
           <div class="product-quantity 
             js-product-quantity-${matchingProduct.id}">
@@ -83,7 +83,7 @@ export function renderOrderSummary() {
 
       const priceString = deliveryOption.priceCents === 0
         ? 'FREE'
-        : `$${formatCurrency(deliveryOption.priceCents)} -`
+        : `${formatCurrency(deliveryOption.priceCents)} -`;
 
         const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
         
@@ -93,7 +93,7 @@ export function renderOrderSummary() {
         data-product-id = "${matchingProduct.id}"
         data-delivery-option-id = "${deliveryOption.id}">
           <input type="radio"
-          ${isChecked ? 'checked' : ''}
+          ${isChecked ? 'checked' : ""}
             class="delivery-option-input"
             name="delivery-option-${matchingProduct.id}">
           <div>
@@ -105,7 +105,7 @@ export function renderOrderSummary() {
             </div>
           </div>
         </div>
-      `
+      `;
     });
 
     return html;
@@ -115,7 +115,7 @@ export function renderOrderSummary() {
     .innerHTML = cartSummaryHtml;
 
   document.querySelectorAll('.js-delete-link')
-    .forEach((link) =>{
+    .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
