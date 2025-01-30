@@ -91,7 +91,6 @@ function renderProductsGrid() {
     addedMessageTimeouts[productId] = timeoutId;
   }
 
-
   document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
       button.addEventListener('click', () => {
@@ -102,5 +101,8 @@ function renderProductsGrid() {
         
       });
     });
+
+    updateCartQuantity();
+
 
 }
